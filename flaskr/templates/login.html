@@ -1,0 +1,24 @@
+{% from "_formhelpers.html" import render_field %}
+{% extends "base.html" %}
+{% block content %}
+  <!-- login form -->
+  <div id="login" class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">Login</div>
+      <div class="panel-body">
+        {% for message in get_flashed_messages() %}
+        <p class="text-danger">{{ message }}</p>
+        {% endfor %}
+        <form method="POST" class="form-horizontal">
+          {{ form.csrf_token }}
+          {{ render_field(form.mail_address,class="form-control") }}
+          {{ render_field(form.password,class="form-control") }}
+          {{ form.submit(class="btn btn-default") }}
+        </form>
+      </div>
+    </div>
+    <div>
+      <a type="button" class="btn btn-default" href="./register.html"><i class="fa fa-user-plus"></i>&nbsp;Register Account</a>
+    </div>
+  </div>
+{% endblock %}

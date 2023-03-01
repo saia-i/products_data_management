@@ -1,0 +1,22 @@
+{% from "_formhelpers.html" import render_field %}
+{% extends "base.html" %}
+{% block content %}
+  <!-- register form -->
+  <div id="login" class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">Register Account</div>
+      <div class="panel-body">
+        <form method="POST" class="form-horizontal">
+          {{ form.csrf_token }}
+          {{ render_field(form.name,class="form-control") }}
+          {{ render_field(form.mail_address,class="form-control") }}
+          {{ render_field(form.password,class="form-control") }}
+          {{ render_field(form.confirm_password,class="form-control") }}
+          {{ render_field(form.submit,class="btn btn-default") }}
+        </form>
+      </div>
+    </div>
+    <div>
+      <a type="button" class="btn btn-default" href="./login.html"><i class="fa fa-reply"></i>&nbsp;Login page</a>
+    </div>
+{% endblock %}

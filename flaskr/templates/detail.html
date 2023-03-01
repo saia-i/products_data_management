@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+  <!-- details -->
+  <div class="container">
+    <a type="button" class="btn btn-default" href="./list.html"><i class="fa fa-reply"></i> back</a>
+    <h2>Details</h2>
+    <div id="details">
+      <table class="table table-hover">
+        <tbody>
+          <tr>
+            <th>ID</th>
+            <td>{{ item.id }}</td>
+          </tr>
+          <tr>
+            <th>name</th>
+            <td>{{ item.name }}</td>
+          </tr>
+          <tr>
+            <th>price</th>
+            <td>${{ item.price }}</td>
+          </tr>
+          <tr>
+            <th>category</th>
+            <td>{{ item.path }}</td>
+          </tr>
+          <tr>
+            <th>brand</th>
+            <td>{{ item.brand_name }}</td>
+          </tr>
+          <tr>
+            <th>condition</th>
+            <td>{{ item.condition_id }}</td>
+          </tr>
+          <tr>
+            <th>description</th>
+            <td>{{ item.description }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <a type="submit" class="btn btn-default" href="{{ url_for('app.edit',item_id=item.id) }}"><i class="fa fa-pencil-square-o"></i>&nbsp;edit</a>
+    </div>
+  </div>
+{% endblock %}

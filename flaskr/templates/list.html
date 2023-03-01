@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block content %}
+  <div id="main" class="container-fluid">
+    <!-- addItem link -->
+    <div id="addItemButton">
+      <a class="btn btn-default" href="{{ url_for('app.add') }}"><i class="fa fa-plus-square-o"></i> Add New Item</a>
+    </div>
+
+    <!-- 検索フォーム -->
+    <div id="forms">
+      <form method="GET" class="form-inline" role="form">
+        <div class="form-group">
+          {{ form.name(class="form-control",placeholder="item name") }}
+        </div>
+        <div class="form-group"><i class="fa fa-plus"></i></div>
+        <div class="form-group">
+          {{ form.parent_category(class="form-control") }}
+          {{ form.child_category(class="form-control") }}
+          {{ form.grand_child_category(class="form-control") }}
+        </div>
+        <div class="form-group"><i class="fa fa-plus"></i></div>
+        <div class="form-group">
+          {{ form.brand(class="form-control",placeholder="brand") }}
+        </div>
+        <div class="form-group"></div>
+        {{ form.submit(class="btn btn-default") }}
+      </form>
+    </div>
+
+    <!-- pagination -->
+    <div class="pages">
+      <nav class="page-nav">
+        <ul class="pager">
+          {% if items.prev_num!=None %}
+          <li class="previous"><a href="{{ prev_page }}">&larr; prev</a></li>
+          {% endif %}
+          {% if items.next_num!=None %}
+          <li class="next"><a href="{{ next_page | safe }}">next &rarr;</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+
+    <!-- table -->
+    <div class="table-responsive">
+      <table id="item-table" class="table table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>price</th>
+            <th>category</th>
+            <th>brand</th>
+            <th>cond</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items.items %}
+          <tr>
+            <td class="item-name"><a href="{{ url_for('app.detail',item_id=item.id) }}">{{ item.name }}</a></td>
+            <td class="item-price">{{ item.price }}</td>
+            <td class="item-category">{{ item.path }}</td>
+            <td class="item-brand">{{ item.brand_name }}</td>
+            <td class="item-condition">
+              {% for condition in [(1,"Mint"),(2,"Near Mint"),(3,"Excellent"),(4,"Very Good"),(5,"Good")] %}
+              {% if condition[0]==item.condition_id %}
+              {{ condition[1] }}
+              {% endif %}
+              {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- pagination -->
+    <div class="pages">
+      <nav class="page-nav">
+        <ul class="pager">
+          {% if items.prev_num!=None %}
+          <li class="previous"><a href="{{ prev_page }}">&larr; prev</a></li>
+          {% endif %}
+          {% if items.next_num!=None %}
+          <li class="next"><a href="{{ next_page | safe }}">next &rarr;</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- ページ番号を指定して表示するフォーム -->
+      <div id="select-page">
+        <form method="GET" class="form-inline">
+          <div class="form-group">
+            <div class="input-group col-xs-6">
+              {{ to_page_form.page(class="form-control",value=items.page) }}
+              {{ to_page_form.name(value=form.name.data) }}
+              {{ to_page_form.brand(value=form.brand.data) }}
+              {{ to_page_form.category_path(value=category_path) }}
+              <!-- 総ページ数 -->
+              <div class="input-group-addon">/ {{ items.pages }}</div>
+            </div>
+            <div class="input-group col-xs-1">
+              {{ to_page_form.submit(class="btn btn-default") }}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+	<script src="../static/js/search.js"></script>
+{% endblock %}

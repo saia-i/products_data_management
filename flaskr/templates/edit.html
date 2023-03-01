@@ -1,0 +1,35 @@
+{% from "_formhelpers.html" import render_field %}
+{% extends "base.html" %}
+{% block content %}
+
+  <!-- details -->
+  <div id="input-main" class="container">
+    <a type="button" class="btn btn-default" href="./detail.html"><i class="fa fa-reply"></i> back</a>
+    <h2>Edit</h2>
+
+    <!-- edit form -->
+    <form method="POST" class="form-horizontal">
+      {{ form.csrf_token }}
+      {{ form.id(value=item.id) }}
+      <!-- name -->
+      {{ render_field(form.name,class="form-control",value=item.name) }}
+      <!-- price -->
+      {{ render_field(form.price,class="form-control",value=item.price) }}
+      <!-- category -->
+      {{ render_field(form.parent_category,class="form-control") }}
+      {{ render_field(form.child_category,class="form-control") }}
+      {{ render_field(form.grand_child_category,class="form-control") }}
+      <!-- brand -->
+      {{ render_field(form.brand,class="form-control",value=item.brand_name) }}
+      <!-- condition -->
+      {{ render_field(form.condition,class="radio-inline",checked=item.condition_id) }}
+      <!-- description -->
+      {{ render_field(form.description,class="form-control",value=item.description) }}
+      <!-- submit button -->
+      {{ render_field(form.submit,class="btn btn-default") }}
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+	<script src="../static/js/category.js"></script>
+{% endblock %}
