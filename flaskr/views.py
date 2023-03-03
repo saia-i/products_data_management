@@ -36,11 +36,11 @@ def list():
         if parent=="":
             category_path=""
         elif child=="":
-            category_path=parent+"/"
+            category_path=f"{parent}/"
         elif grand_child=="":
-            category_path=parent+"/"+child+"/"
+            category_path=f"{parent}/{child}/"
         else:
-            category_path=parent+"/"+child+"/"+grand_child+"/"
+            category_path=f"{parent}/{child}/{grand_child}/"
         
     items=Item.get_list(name,category_path,brand,page)
     form.parent_category.choices = [(parent, parent)] if parent!="" else [("", "--parentCategory--")]
@@ -50,12 +50,10 @@ def list():
     next_page=url_for("app.list",name=name,category_path=category_path,brand=brand,page=items.next_num)
     prev_page=url_for("app.list",name=name,category_path=category_path,brand=brand,page=items.prev_num)
     
-
        
     return render_template("list.html",items=items,form=form,to_page_form=to_page_form,
                            next_page=next_page,prev_page=prev_page,category_path=category_path)
 
-    
 
 @bp.route("/detail/<int:item_id>",methods=["GET","POST"])
 def detail(item_id):
